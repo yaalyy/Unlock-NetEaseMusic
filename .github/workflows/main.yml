@@ -10,8 +10,8 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-    - name: Cherkout
-      uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v4
 
     - name: Install python packages
       run: |
@@ -25,3 +25,10 @@ jobs:
         PYTHONIOENCODING: utf-8
         PYTHONLEGACYWINDOWSSTDIO: utf-8
       run: python auto_login.py
+      continue-on-error: false
+    
+    - name: Check Failure
+      if: failure()  # check if the previous job is failed
+      run: |
+        echo "The auto login script failed. Check logs for details."
+        exit 1
