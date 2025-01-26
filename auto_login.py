@@ -98,6 +98,18 @@ def extension_login(email,password):
 
         time.sleep(2)
 
+        
+        time.sleep(3)
+
+        logging.info("Click my playlist")
+        browser.find_element_by_xpath('//a[.//em[text()="我的音乐"]]').click()
+
+        time.sleep(5)
+
+        logging.info("Play the music")
+        browser.find_element(By.ID, 'flag_play').click()
+
+        time.sleep(10)
         browser.refresh() # 刷新页面
         logging.info("Unlock finished")
 
