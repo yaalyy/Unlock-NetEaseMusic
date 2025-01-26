@@ -74,8 +74,8 @@ def extension_login(email,password):
 
         time.sleep(2)
         
+        # 选择网易邮箱登录
         logging.info("Click the Netease email login")
-
         target = WebDriverWait(browser, 10).until(
             EC.presence_of_element_located((By.XPATH, '//a[contains(@data-log, "netease_mail")]'))
         )
@@ -96,16 +96,15 @@ def extension_login(email,password):
         logging.info("Click login button")
         browser.find_element_by_id('dologin').click()
 
-        time.sleep(2)
-
-        
         time.sleep(3)
 
+        # 进入音乐清单
         logging.info("Click my playlist")
         browser.find_element_by_xpath('//a[.//em[text()="我的音乐"]]').click()
 
         time.sleep(5)
 
+        # 播放音乐
         logging.info("Play the music")
         browser.find_element(By.ID, 'flag_play').click()
 
