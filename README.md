@@ -1,4 +1,5 @@
 # Unlock-NetEaseMusic
+### Issue encountered: Login May be intercepted by CAPTCHA, so the script may not working
 Use the Chrome extension NetEaseMusicWorld+ to unlock overseas NetEase Music access.
 
 It's run by Github Actions, so no self-hosted server is needed.
