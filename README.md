@@ -1,8 +1,8 @@
 # Unlock-NetEaseMusic
-### Issue encountered: Login May be intercepted by CAPTCHA, so the script may not working
+
 Use the Chrome extension NetEaseMusicWorld+ to unlock overseas NetEase Music access.
 
-It's run by Github Actions, so no self-hosted server is needed.
+It's run by Github Actions, so no self-hosted server is needed(This feature is **maintaining**, not available). Alternatively, you can run by local browser cache.  
 
 ## How to run on Github  (May be intercepted by CAPTCHA in oversea)
 
@@ -18,7 +18,7 @@ It's run by Github Actions, so no self-hosted server is needed.
 ~~3. Run `auto_login.py`~~   
 
 ### Run by local browser cache (Recommended)
-1. Open the Chrome on your local computer to login Netease, then close the Chrome(Closing the Chrome is important).  
+1. Open the Chrome on your local computer to login Netease Music, then close the Chrome(Closing the Chrome is important).  
 2. Install python packages: `pip install -r requirements.txt `   
 3. Enter your chrome profile path in `local_login.py`, this path is usually `C:\\Users\\YourUser\\AppData\\Local\\Google\\Chrome\\User Data`.    
 4. Set the timer for repeating the task.  
