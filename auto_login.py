@@ -97,12 +97,19 @@ def extension_login(email,password):
         browser.find_element_by_id('dologin').click()
 
         time.sleep(3)
-
         # 进入音乐清单
         logging.info("Click my playlist")
         browser.find_element_by_xpath('//a[.//em[text()="我的音乐"]]').click()
 
         time.sleep(5)
+
+        try:
+            browser.switch_to_frame("g_iframe")
+            logging.info("Successfully entered the playing frame")
+        
+        except Exception as e:
+            logging.error("Error entering iframe: %s", e)
+            raise
 
         # 播放音乐
         logging.info("Play the music")
