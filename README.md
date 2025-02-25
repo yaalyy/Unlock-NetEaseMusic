@@ -4,6 +4,11 @@ Use the Chrome extension NetEaseMusicWorld+ to unlock overseas NetEase Music acc
 
 It's run by Github Actions, so no self-hosted server is needed(This feature is **maintaining**, not available). Alternatively, you can run by local browser cache.  
 
+## System Requirements  
+:white_check_mark:Windows 8.1/10/11   
+:x:Linux (Not Supported, developing)  
+:x:MacOS (Not Supported, developing)  
+
 ## How to run on Github  (May be intercepted by CAPTCHA in oversea)
 
 ~~1. Fork this repository (and star if you like it)~~  
