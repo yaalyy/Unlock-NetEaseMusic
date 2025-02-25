@@ -106,7 +106,7 @@ def extension_login(email,password):
         time.sleep(5)
 
         try:
-            browser.switch_to_frame("g_iframe")
+            browser.switch_to.frame("g_iframe")
             logging.info("Successfully entered the playing frame")
         
         except Exception as e:
