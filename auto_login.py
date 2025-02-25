@@ -29,21 +29,28 @@ def enter_iframe(browser):
 def extension_login(email,password):
     try:
         chrome_options = webdriver.ChromeOptions()
-
         logging.info("Load Chrome extension NetEaseMusicWorldPlus")
         chrome_options.add_extension('NetEaseMusicWorldPlus.crx')
 
         logging.info("Load Chrome driver")
         browser = webdriver.Chrome(executable_path="chromedriver.exe", options=chrome_options)
-        # browser = webdriver.Chrome(executable_path=ChromeDriverManager().install(), options=chrome_options)
 
         # 设置全局的隐式等待(直到找到元素),20秒后找不到抛出找不到元素
         browser.implicitly_wait(20)
 
+        logging.info("Getting the webpage")
         browser.get('https://music.163.com')
+        
+
+        browser.refresh() # 刷新页面
+        time.sleep(5)
 
         # 查找登录按钮
         target = browser.find_element_by_xpath("//a[text()='登录']")
+        if(target):
+            logging.info("Found the login button")
+        else:
+            logging.info("Not see the login button")
         browser.execute_script('arguments[0].scrollIntoView(true);', target)
 
         time.sleep(10)
@@ -54,13 +61,25 @@ def extension_login(email,password):
 
         logging.info("Select login method")
         # browser.find_element_by_css_selector('.u-btn2.other').click()
+        target = browser.find_element_by_xpath("//a[text()='选择其他登录模式']")
+        if(target):
+            logging.info("Found the button to select login mode")
+        else:
+            logging.info("Not see the button to select login mode")
         browser.find_element_by_xpath("//a[text()='选择其他登录模式']").click()
 
         # 勾选同意协议
         logging.info("Click agreements")
         browser.find_element_by_id('j-official-terms').click()
 
-        browser.find_element_by_xpath("//a[text()='网易邮箱帐号登录']").click()
+        time.sleep(2)
+        
+        # 选择网易邮箱登录
+        logging.info("Click the Netease email login")
+        target = WebDriverWait(browser, 10).until(
+            EC.presence_of_element_located((By.XPATH, '//a[contains(@data-log, "netease_mail")]'))
+        )
+        target.click()
 
         # 进入iframe
         time.sleep(10)
@@ -77,8 +96,28 @@ def extension_login(email,password):
         logging.info("Click login button")
         browser.find_element_by_id('dologin').click()
 
-        time.sleep(2)
+        time.sleep(3)
+        browser.refresh()  # 刷新页面
+        time.sleep(3)
+        # 进入音乐清单
+        logging.info("Click my playlist")
+        browser.find_element_by_xpath('//a[.//em[text()="我的音乐"]]').click()
 
+        time.sleep(5)
+
+        try:
+            browser.switch_to.frame("g_iframe")
+            logging.info("Successfully entered the playing frame")
+        
+        except Exception as e:
+            logging.error("Error entering iframe: %s", e)
+            raise
+
+        # 播放音乐
+        logging.info("Play the music")
+        browser.find_element(By.ID, 'flag_play').click()
+
+        time.sleep(10)
         browser.refresh() # 刷新页面
         logging.info("Unlock finished")
 
@@ -88,12 +127,14 @@ def extension_login(email,password):
         logging.error("Error during login process: %s", e)
         raise
 
+
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO,format='[%(levelname)s] %(asctime)s %(message)s')
     
     try:
         email = os.environ['EMAIL']
         password = os.environ['PASSWORD']
+
     except:
         logging.error('Fail to read email and password.')
         exit(1)
