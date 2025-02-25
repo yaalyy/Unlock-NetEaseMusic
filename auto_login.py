@@ -97,6 +97,8 @@ def extension_login(email,password):
         browser.find_element_by_id('dologin').click()
 
         time.sleep(3)
+        browser.refresh()  # 刷新页面
+        time.sleep(3)
         # 进入音乐清单
         logging.info("Click my playlist")
         browser.find_element_by_xpath('//a[.//em[text()="我的音乐"]]').click()
