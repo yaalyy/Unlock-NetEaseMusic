@@ -52,7 +52,7 @@ def extension_login(email, password,userDataDir):
         logging.info("Click my playlist")
         browser.find_element_by_xpath('//a[.//em[text()="我的音乐"]]').click()
 
-        time.sleep(5)
+        time.sleep(10)
 
         try:
             browser.switch_to.frame("g_iframe")
@@ -66,7 +66,7 @@ def extension_login(email, password,userDataDir):
         logging.info("Play the music")
         browser.find_element(By.ID, 'flag_play').click()
 
-        time.sleep(10)
+        time.sleep(20)
         browser.refresh() # 刷新页面
         logging.info("Unlock finished")
 
@@ -96,10 +96,13 @@ def login_task():
             exit(1)
         else:
             logging.info("Script executed successfully")
-            exit(0)
+            # exit(0)
     
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO,format='[%(levelname)s] %(asctime)s %(message)s')
+    schedule_logger = logging.getLogger("schedule")
+    schedule_logger.setLevel(level=logging.DEBUG)
+    
     schedule.every().day.at("01:48").do(login_task)# timer to repeat the task
     login_task()
 
