@@ -11,6 +11,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service as ChromeService
 import schedule
+import json
 
 @retry(wait_random_min=5000, wait_random_max=10000, stop_max_attempt_number=3)
 def enter_iframe(browser):
@@ -80,9 +81,13 @@ def login_task():
     try:
         # email = os.environ['EMAIL']
         # password = os.environ['PASSWORD']
-        email="test"
-        password="test123"
-        userDataDir = "C:\\Users\\yaaly\\AppData\\Local\\Google\\Chrome\\User Data"  # path of Chrome profile
+
+        with open("config.json",mode="r", encoding="utf-8") as read_file:
+            config_data = json.load(read_file)
+            
+        email=config_data["email"]
+        password=config_data["password"]
+        userDataDir = config_data["userDataDir"]  # path of Chrome profile
         profile_name = "Profile 1"
 
     except:
