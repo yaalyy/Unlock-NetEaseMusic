@@ -25,7 +25,7 @@ It's run by Github Actions, so no self-hosted server is needed(This feature is *
 ### Run by local browser cache (Recommended)
 1. Open the Chrome on your local computer to login Netease Music, then close the Chrome(Closing the Chrome is important).  
 2. Install python packages: `pip install -r requirements.txt `   
-3. Enter your chrome profile path in `local_login.py`, this path is usually `C:\\Users\\YourUser\\AppData\\Local\\Google\\Chrome\\User Data`.    
+3. Enter your chrome profile path in `config.json`, this path is usually `C:\\Users\\YourUser\\AppData\\Local\\Google\\Chrome\\User Data`.    
 4. Set the timer for repeating the task.  
 5. Run `local_login.py`   
 
