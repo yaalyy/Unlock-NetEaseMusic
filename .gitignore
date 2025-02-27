@@ -1,3 +1,4 @@
 /.vscode
 *.code-workspace
 /venv
+.DS_Store
