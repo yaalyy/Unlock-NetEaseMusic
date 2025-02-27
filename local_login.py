@@ -12,6 +12,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service as ChromeService
 import schedule
 import json
+from Users import User
 
 @retry(wait_random_min=5000, wait_random_max=10000, stop_max_attempt_number=3)
 def enter_iframe(browser):
@@ -84,24 +85,36 @@ def login_task():
 
         with open("config.json",mode="r", encoding="utf-8") as read_file:
             config_data = json.load(read_file)
+        
+        
+        users = []
+        for user in config_data["users"]:
+            name = user["name"]
+            email= user["email"]
+            password = user["password"]
+            userDataDir = user["userDataDir"]  # path of Chrome profile
+            users.append(User(name = name, email = email, password = password, userDataDir = userDataDir))
             
-        email=config_data["email"]
-        password=config_data["password"]
-        userDataDir = config_data["userDataDir"]  # path of Chrome profile
-        profile_name = "Profile 1"
+            
+        # profile_name = "Profile 1"
 
     except:
-        logging.error('Fail to read email and password.')
+        logging.error('Fail to read user credential.')
         exit(1)
     else:
-        try:
-            extension_login(email,password,userDataDir)
-        except Exception as e:
-            logging.error("Failure in auto login: %s", e)
-            exit(1)
-        else:
-            logging.info("Script executed successfully")
-            # exit(0)
+        for user in users:
+            email = user.getEmail()
+            password = user.getPassword()
+            userDataDir = user.getUserDataDir()
+            name = user.getName()
+            try:
+                extension_login(email,password,userDataDir)
+            except Exception as e:
+                logging.error("Failure in auto login of user ({name}) :%s", e)
+                # exit(1)
+            else:
+                logging.info("User ({name}) script executed successfully")
+                # exit(0)
     
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO,format='[%(levelname)s] %(asctime)s %(message)s')
