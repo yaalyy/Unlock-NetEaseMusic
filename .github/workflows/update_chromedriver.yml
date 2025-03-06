@@ -31,7 +31,7 @@ jobs:
 
       - name: Replace Old Chromedriver
         run: |
-          mv chromedriver_new/chromedriver.exe ./chromedriver.exe
+          mv chromedriver_new/chromedriver-win64/chromedriver.exe ./chromedriver.exe
           rm -rf chromedriver_new
           chmod +x chromedriver.exe
 
