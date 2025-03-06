@@ -32,6 +32,7 @@ def enter_iframe(browser):
 def extension_login(email, password,userDataDir, profile_name=None):
     try:
         chrome_options = webdriver.ChromeOptions()
+        #chrome_options.add_argument("headless")
         chrome_options.add_argument("user-data-dir="+userDataDir)
         if profile_name:
             chrome_options.add_argument("profile-directory="+profile_name)
@@ -86,7 +87,8 @@ def login_task():
         multi_user_mode = False
         with open("config.json",mode="r", encoding="utf-8") as read_file:
             config_data = json.load(read_file)
-        
+        #if(config_data):
+        #    print("Got config")
         if "users" in config_data:
             multi_user_mode = True
             users = []
@@ -95,7 +97,8 @@ def login_task():
                 email= user["email"]
                 password = user["password"]
                 userDataDir = user["userDataDir"]  # path of Chrome profile
-                users.append(User(name = name, email = email, password = password, userDataDir = userDataDir))
+                profile_name = user["profileName"]
+                users.append(User(name = name, email = email, password = password, userDataDir = userDataDir, profileName=profile_name))
         
         email=config_data["email"]
         password=config_data["password"]
