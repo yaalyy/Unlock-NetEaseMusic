@@ -29,11 +29,12 @@ def enter_iframe(browser):
 
 # 失败后随机 1-3s 后重试，最多 3 次
 @retry(wait_random_min=1000, wait_random_max=3000, stop_max_attempt_number=5)
-def extension_login(email, password,userDataDir):
+def extension_login(email, password,userDataDir, profile_name=None):
     try:
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument("user-data-dir="+userDataDir)
-        # chrome_options.add_argument("profile-directory"+profile_name)
+        if profile_name:
+            chrome_options.add_argument("profile-directory="+profile_name)
         logging.info("Load Chrome extension NetEaseMusicWorldPlus")
         chrome_options.add_extension('NetEaseMusicWorldPlus.crx')
 
@@ -82,38 +83,54 @@ def login_task():
     try:
         # email = os.environ['EMAIL']
         # password = os.environ['PASSWORD']
-
+        multi_user_mode = False
         with open("config.json",mode="r", encoding="utf-8") as read_file:
             config_data = json.load(read_file)
         
+        if "users" in config_data:
+            multi_user_mode = True
+            users = []
+            for user in config_data["users"]:
+                name = user["name"]
+                email= user["email"]
+                password = user["password"]
+                userDataDir = user["userDataDir"]  # path of Chrome profile
+                users.append(User(name = name, email = email, password = password, userDataDir = userDataDir))
         
-        users = []
-        for user in config_data["users"]:
-            name = user["name"]
-            email= user["email"]
-            password = user["password"]
-            userDataDir = user["userDataDir"]  # path of Chrome profile
-            users.append(User(name = name, email = email, password = password, userDataDir = userDataDir))
+        email=config_data["email"]
+        password=config_data["password"]
+        userDataDir = config_data["userDataDir"]  # path of Chrome profile
             
-            
-        # profile_name = "Profile 1"
 
     except:
         logging.error('Fail to read user credential.')
         exit(1)
     else:
-        for user in users:
-            email = user.getEmail()
-            password = user.getPassword()
-            userDataDir = user.getUserDataDir()
-            name = user.getName()
+        
+        if multi_user_mode == True:  # multi user mode
+            for user in users:
+                email = user.getEmail()
+                password = user.getPassword()
+                userDataDir = user.getUserDataDir()
+                name = user.getName()
+                profile_name = user.getProfileName()
+                try:
+                    extension_login(email=email,password=password,userDataDir=userDataDir,profile_name=profile_name)
+                except Exception as e:
+                    logging.error("Failure in auto login of user ({name}) :%s", e)
+                    # exit(1)
+                else:
+                    logging.info("User ({name}) script executed successfully")
+                    # exit(0)
+        
+        else:  # single user
             try:
-                extension_login(email,password,userDataDir)
+                extension_login(email=email,password=password,userDataDir=userDataDir)
             except Exception as e:
-                logging.error("Failure in auto login of user ({name}) :%s", e)
-                # exit(1)
+                logging.error("Failure in auto login: %s", e)
+                exit(1)
             else:
-                logging.info("User ({name}) script executed successfully")
+                logging.info("Script executed successfully")
                 # exit(0)
     
 if __name__ == '__main__':
