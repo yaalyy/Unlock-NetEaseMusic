@@ -85,8 +85,16 @@ def login_task():
         # email = os.environ['EMAIL']
         # password = os.environ['PASSWORD']
         multi_user_mode = False
-        with open("config.json",mode="r", encoding="utf-8") as read_file:
-            config_data = json.load(read_file)
+        try:
+            with open("config.json",mode="r", encoding="utf-8") as read_file:
+                config_data = json.load(read_file)
+        except FileNotFoundError:
+            logging.info("Config File Not Found")
+            config_data = None
+        except json.JSONDecodeError:
+            logging.info("ERROR: config.json error format！")
+            config_data = None
+
         #if(config_data):
         #    print("Got config")
         if "users" in config_data:
@@ -99,14 +107,14 @@ def login_task():
                 userDataDir = user["userDataDir"]  # path of Chrome profile
                 profile_name = user["profileName"]
                 users.append(User(name = name, email = email, password = password, userDataDir = userDataDir, profileName=profile_name))
-        
-        email=config_data["email"]
-        password=config_data["password"]
-        userDataDir = config_data["userDataDir"]  # path of Chrome profile
+        else:
+            email=config_data["email"]
+            password=config_data["password"]
+            userDataDir = config_data["userDataDir"]  # path of Chrome profile
             
 
-    except:
-        logging.error('Fail to read user credential.')
+    except Exception as e:
+        logging.error('Failed to read user credential: ',e)
         exit(1)
     else:
         

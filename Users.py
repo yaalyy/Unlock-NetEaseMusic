@@ -1,10 +1,4 @@
-class User:
-    _name=None
-    _email=None
-    _password=None
-    _userDataDir=None
-    _profileName=None
-    
+class User:    
     def __init__(self, name=None, email=None, password=None, userDataDir=None, profileName=None):
         self._name=name
         self._email=email
