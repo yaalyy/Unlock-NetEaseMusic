@@ -28,7 +28,7 @@ def enter_iframe(browser):
         raise
 
 # 失败后随机 1-3s 后重试，最多 3 次
-@retry(wait_random_min=1000, wait_random_max=3000, stop_max_attempt_number=5)
+@retry(wait_random_min=1000, wait_random_max=3000, stop_max_attempt_number=3)
 def extension_login(email, password,userDataDir, profile_name=None):
     try:
         chrome_options = webdriver.ChromeOptions()
@@ -91,9 +91,13 @@ def login_task():
         except FileNotFoundError:
             logging.info("Config File Not Found")
             config_data = None
+            error_flag = True
+            return
         except json.JSONDecodeError:
             logging.info("ERROR: config.json error format！")
             config_data = None
+            error_flag = True
+            return
 
         #if(config_data):
         #    print("Got config")
@@ -115,9 +119,10 @@ def login_task():
 
     except Exception as e:
         logging.error('Failed to read user credential: ',e)
-        exit(1)
+        error_flag = True
+        # exit(1)
+        return
     else:
-        
         if multi_user_mode == True:  # multi user mode
             for user in users:
                 email = user.getEmail()
@@ -126,6 +131,7 @@ def login_task():
                 name = user.getName()
                 profile_name = user.getProfileName()
                 try:
+                    logging.info("Start auto login of user (%s)", name)
                     extension_login(email=email,password=password,userDataDir=userDataDir,profile_name=profile_name)
                 except Exception as e:
                     logging.error("Failure in auto login of user (%s) :%s",name, e)
@@ -139,7 +145,7 @@ def login_task():
                 extension_login(email=email,password=password,userDataDir=userDataDir)
             except Exception as e:
                 logging.error("Failure in auto login: %s", e)
-                exit(1)
+                # exit(1)
             else:
                 logging.info("Script executed successfully")
                 # exit(0)
@@ -150,8 +156,10 @@ if __name__ == '__main__':
     schedule_logger.setLevel(level=logging.DEBUG)
     
     schedule.every().day.at("01:48").do(login_task)# timer to repeat the task
+    
+    error_flag = False
     login_task()
 
-    while True:
+    while not error_flag:
         schedule.run_pending()  
         time.sleep(1)
