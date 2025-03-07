@@ -32,7 +32,7 @@ def enter_iframe(browser):
 def extension_login(email, password,userDataDir, profile_name=None):
     try:
         chrome_options = webdriver.ChromeOptions()
-        #chrome_options.add_argument("headless")
+        #chrome_options.add_argument("headless")  # Headless mode(Browser running in backend)
         chrome_options.add_argument("user-data-dir="+userDataDir)
         if profile_name:
             chrome_options.add_argument("profile-directory="+profile_name)
