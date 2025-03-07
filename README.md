@@ -25,9 +25,43 @@ It's run by Github Actions, so no self-hosted server is needed(This feature is *
 ### Run by local browser cache (Recommended)
 1. Open the Chrome on your local computer to login Netease Music, then close the Chrome(Closing the Chrome is important).  
 2. Install python packages: `pip install -r requirements.txt `   
-3. Enter your chrome profile path in `config.json`, this path is usually `C:\\Users\\YourUser\\AppData\\Local\\Google\\Chrome\\User Data`.    
+3. Enter your chrome profile path in `config.json`, this path is usually `C:\\Users\\YourUser\\AppData\\Local\\Google\\Chrome\\User Data` for Windows. This path can also be found in `chrome://version/`. When run by local browser cache, the email and password in `config.json` are not needed, so you can fill in them casually.      
 4. Set the timer for repeating the task.  
-5. Run `local_login.py`   
+5. Run `local_login.py`  
+## config.json Template
+We support single user mode and multi-user mode.  
+**Single User**:  
+```json
+{
+    "userDataDir": "C:\\Users\\YourUser\\AppData\\Local\\Google\\Chrome\\User Data",
+    "email": "test",
+    "password": "test123"
+}
+```
+**Multi-User**:  
+```json
+{
+    "users": [
+        {
+            "userDataDir": "C:\\Users\\YourUser\\AppData\\Local\\Google\\Chrome\\User Data",
+            "email": "test",
+            "password": "test123",
+            "name": "tt",
+            "profileName": "profile 1"
+        },
+        {
+            "userDataDir": "C:\\Users\\YourUser\\AppData\\Local\\Google\\Chrome\\User Data",
+            "email": "test",
+            "password": "test123",
+            "name": "user2",
+            "profileName": "profile 2"
+        }
+    ]
+
+}
+```
+### PS: Multi-Account Mode:   
+To run in multi-account mode, you need to create multiple Chrome profiles, and login your respective account in each profile. Then in the config.json, you need to fill in different profile names for each profile.
 
 ## How it works
 

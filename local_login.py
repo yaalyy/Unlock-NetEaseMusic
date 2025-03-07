@@ -12,6 +12,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service as ChromeService
 import schedule
 import json
+from Users import User
 
 @retry(wait_random_min=5000, wait_random_max=10000, stop_max_attempt_number=3)
 def enter_iframe(browser):
@@ -27,12 +28,14 @@ def enter_iframe(browser):
         raise
 
 # 失败后随机 1-3s 后重试，最多 3 次
-@retry(wait_random_min=1000, wait_random_max=3000, stop_max_attempt_number=5)
-def extension_login(email, password,userDataDir):
+@retry(wait_random_min=1000, wait_random_max=3000, stop_max_attempt_number=3)
+def extension_login(email, password,userDataDir, profile_name=None):
     try:
         chrome_options = webdriver.ChromeOptions()
+        #chrome_options.add_argument("headless")  # Headless mode(Browser running in backend)
         chrome_options.add_argument("user-data-dir="+userDataDir)
-        # chrome_options.add_argument("profile-directory"+profile_name)
+        if profile_name:
+            chrome_options.add_argument("profile-directory="+profile_name)
         logging.info("Load Chrome extension NetEaseMusicWorldPlus")
         chrome_options.add_extension('NetEaseMusicWorldPlus.crx')
 
@@ -75,33 +78,79 @@ def extension_login(email, password,userDataDir):
         browser.quit()
     except Exception as e:
         logging.error("Error during login process: %s", e)
+        browser.quit()
         raise
 
 def login_task():
+    global error_flag
     try:
         # email = os.environ['EMAIL']
         # password = os.environ['PASSWORD']
-
-        with open("config.json",mode="r", encoding="utf-8") as read_file:
-            config_data = json.load(read_file)
-            
-        email=config_data["email"]
-        password=config_data["password"]
-        userDataDir = config_data["userDataDir"]  # path of Chrome profile
-        profile_name = "Profile 1"
-
-    except:
-        logging.error('Fail to read email and password.')
-        exit(1)
-    else:
+        multi_user_mode = False
         try:
-            extension_login(email,password,userDataDir)
-        except Exception as e:
-            logging.error("Failure in auto login: %s", e)
-            exit(1)
+            with open("config.json",mode="r", encoding="utf-8") as read_file:
+                config_data = json.load(read_file)
+        except FileNotFoundError:
+            logging.info("Config File Not Found")
+            config_data = None
+            error_flag = True
+            return
+        except json.JSONDecodeError:
+            logging.info("ERROR: config.json error format！")
+            config_data = None
+            error_flag = True
+            return
+
+        #if(config_data):
+        #    print("Got config")
+        if "users" in config_data:
+            multi_user_mode = True
+            users = []
+            for user in config_data["users"]:
+                name = user["name"]
+                email= user["email"]
+                password = user["password"]
+                userDataDir = user["userDataDir"]  # path of Chrome profile
+                profile_name = user["profileName"]
+                users.append(User(name = name, email = email, password = password, userDataDir = userDataDir, profileName=profile_name))
         else:
-            logging.info("Script executed successfully")
-            # exit(0)
+            email=config_data["email"]
+            password=config_data["password"]
+            userDataDir = config_data["userDataDir"]  # path of Chrome profile
+            
+
+    except Exception as e:
+        logging.error('Failed to read user credential: ',e)
+        error_flag = True
+        # exit(1)
+        return
+    else:
+        if multi_user_mode == True:  # multi user mode
+            for user in users:
+                email = user.getEmail()
+                password = user.getPassword()
+                userDataDir = user.getUserDataDir()
+                name = user.getName()
+                profile_name = user.getProfileName()
+                try:
+                    logging.info("Start auto login of user (%s)", name)
+                    extension_login(email=email,password=password,userDataDir=userDataDir,profile_name=profile_name)
+                except Exception as e:
+                    logging.error("Failure in auto login of user (%s) :%s",name, e)
+                    # exit(1)
+                else:
+                    logging.info("User (%s) script executed successfully", name)
+                    # exit(0)
+        
+        else:  # single user
+            try:
+                extension_login(email=email,password=password,userDataDir=userDataDir)
+            except Exception as e:
+                logging.error("Failure in auto login: %s", e)
+                # exit(1)
+            else:
+                logging.info("Script executed successfully")
+                # exit(0)
     
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO,format='[%(levelname)s] %(asctime)s %(message)s')
@@ -109,8 +158,10 @@ if __name__ == '__main__':
     schedule_logger.setLevel(level=logging.DEBUG)
     
     schedule.every().day.at("01:48").do(login_task)# timer to repeat the task
+    
+    error_flag = False
     login_task()
 
-    while True:
+    while not error_flag:
         schedule.run_pending()  
         time.sleep(1)
