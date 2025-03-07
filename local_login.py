@@ -78,6 +78,7 @@ def extension_login(email, password,userDataDir, profile_name=None):
         browser.quit()
     except Exception as e:
         logging.error("Error during login process: %s", e)
+        browser.quit()
         raise
 
 def login_task():
