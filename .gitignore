@@ -2,4 +2,7 @@
 *.code-workspace
 /venv
 .DS_Store
+<<<<<<< HEAD
 /__pycache__
+=======
+>>>>>>> main

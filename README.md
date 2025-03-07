@@ -62,4 +62,7 @@ When you login to https://music.163.com in Chrome the extension NetEaseMusicWorl
 
 The Github Action will run daily to do the above actions and unlock you from the foreign IP restriction.  
 
-When you use local browser cache to execute, the script would use the cookie in your local browser to play songs, but you have to manully login the account in advance to obtain the cookie.
+When you use local browser cache to execute, the script would use the cookie in your local browser to play songs, but you have to manully login the account in advance to obtain the cookie.  
+
+## Credit
+This repo was forked from [Lennox-Elaphurus/Unlock-NetEaseMusic](https://github.com/Lennox-Elaphurus/Unlock-NetEaseMusic "Lennox-Elaphurus/Unlock-NetEaseMusic"). Due to the original repo has been archived, we decided to detach the fork connection for the future maintenance, and this also makes this repo enabled to be indexed by people, as forked repo is not indexed on GitHub by default. 
