@@ -128,10 +128,10 @@ def login_task():
                 try:
                     extension_login(email=email,password=password,userDataDir=userDataDir,profile_name=profile_name)
                 except Exception as e:
-                    logging.error("Failure in auto login of user ({name}) :%s", e)
+                    logging.error("Failure in auto login of user (%s) :%s",name, e)
                     # exit(1)
                 else:
-                    logging.info("User ({name}) script executed successfully")
+                    logging.info("User (%s) script executed successfully", name)
                     # exit(0)
         
         else:  # single user
