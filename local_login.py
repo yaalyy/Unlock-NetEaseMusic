@@ -82,6 +82,7 @@ def extension_login(email, password,userDataDir, profile_name=None):
         raise
 
 def login_task():
+    global error_flag
     try:
         # email = os.environ['EMAIL']
         # password = os.environ['PASSWORD']
