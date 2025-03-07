@@ -48,6 +48,13 @@ We support single user mode and multi-user mode.
             "password": "test123",
             "name": "tt",
             "profileName": "profile 1"
+        },
+        {
+            "userDataDir": "C:\\Users\\YourUser\\AppData\\Local\\Google\\Chrome\\User Data",
+            "email": "test",
+            "password": "test123",
+            "name": "user2",
+            "profileName": "profile 2"
         }
     ]
 
