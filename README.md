@@ -13,7 +13,7 @@ It's run by Github Actions, so no self-hosted server is needed(This feature is *
 
 ~~1. Fork this repository (and star if you like it)~~  
 ~~2. In your own repository, enter your email and password as the value of two Github Action repository   secrets `EMAIL` and `PASSWORD` .~~  
-~~3. Run Github Action `Unlock-NetEaseMusic` (It will run automatically every day.)~~  
+~~3. Run Github Action `Unlock-NetEaseMusic` (It will run automatically every day.)~~
 
 ## How to run locally
 
@@ -23,11 +23,14 @@ It's run by Github Actions, so no self-hosted server is needed(This feature is *
 ~~3. Run `auto_login.py`~~   
 
 ### Run by local browser cache (Recommended)
-1. Open the Chrome on your local computer to login Netease Music, then close the Chrome(Closing the Chrome is important).  
+1. Open the Chrome on your local computer to login Netease Music, then use Inspect tool of the Chrome to find the cookie named `MUSIC_U` and copy its value for the later use.  
 2. Install python packages: `pip install -r requirements.txt `   
-3. Enter your chrome profile path in `config.json`, this path is usually `C:\\Users\\YourUser\\AppData\\Local\\Google\\Chrome\\User Data` for Windows. This path can also be found in `chrome://version/`. When run by local browser cache, the email and password in `config.json` are not needed, so you can fill in them casually.      
-4. Set the timer for repeating the task.  
-5. Run `local_login.py`  
+3. When run by local browser cache, the email, password, userDataDir and profileName in `config.json` are not needed, so you can fill in them casually.  
+Enter the value of login_cookie that we obtained in step 1.  
+~~Enter your chrome profile path in `config.json`, this path is usually `C:\\Users\\YourUser\\AppData\\Local\\Google\\Chrome\\User Data` for Windows. This path can also be found in `chrome://version/`.~~     
+
+1. Set the timer for repeating the task.  
+2. Run `local_login.py`  
 ## config.json Template
 We support single user mode and multi-user mode.  
 **Single User**:  
@@ -35,7 +38,8 @@ We support single user mode and multi-user mode.
 {
     "userDataDir": "C:\\Users\\YourUser\\AppData\\Local\\Google\\Chrome\\User Data",
     "email": "test",
-    "password": "test123"
+    "password": "test123",
+    "login_cookie": "xxx"
 }
 ```
 **Multi-User**:  
@@ -47,21 +51,27 @@ We support single user mode and multi-user mode.
             "email": "test",
             "password": "test123",
             "name": "tt",
-            "profileName": "profile 1"
+            "profileName": "profile 1",
+            "login_cookie": "xxx"
         },
         {
             "userDataDir": "C:\\Users\\YourUser\\AppData\\Local\\Google\\Chrome\\User Data",
             "email": "test",
             "password": "test123",
             "name": "user2",
-            "profileName": "profile 2"
+            "profileName": "profile 2",
+            "login_cookie": "xxx"
         }
     ]
 
 }
 ```
 ### PS: Multi-Account Mode:   
-To run in multi-account mode, you need to create multiple Chrome profiles, and login your respective account in each profile. Then in the config.json, you need to fill in different profile names for each profile.
+To run in multi-account mode, you need to login and fill in the login_cookie for every Netease Music account.
+~~To run in multi-account mode, you need to create multiple Chrome profiles, and login your respective account in each profile. Then in the config.json, you need to fill in different profile names for each profile.~~
+
+### Cookie Expire Duration:
+Each cookie obtained by login has about 1-month expire duration, which is not valid forever. Therefore, after about one month, you need to login again to obtain a new cookie.
 
 ## How it works
 
