@@ -145,16 +145,18 @@ def login_task(config_string):
                     extension_login(email=email,password=password,userDataDir=userDataDir,profile_name=profile_name, cookie=login_cookie)
                 except Exception as e:
                     logging.error("Failure in auto login of user (%s) :%s",name, e)
-                    exit(1)
+                    error_flag = True
+                    #exit(1)
                 else:
                     logging.info("User (%s) script executed successfully", name)
-                    exit(0)
+                    #exit(0)
         
         else:  # single user
             try:
                 extension_login(email=email,password=password,userDataDir=userDataDir,cookie=login_cookie)
             except Exception as e:
                 logging.error("Failure in auto login: %s", e)
+                error_flag = True
                 exit(1)
             else:
                 logging.info("Script executed successfully")
@@ -162,13 +164,16 @@ def login_task(config_string):
     
 if __name__ == '__main__':   
     logging.basicConfig(level=logging.INFO,format='[%(levelname)s] %(asctime)s %(message)s')
-   
+    
     config_data = os.environ["CONFIG"]
     if config_data:
         login_task(config_data)
+        if(error_flag):
+            exit(1)
     
     else:
         logging.error("Fail to read the config")
+        exit(1)
     
 
     
