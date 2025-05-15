@@ -100,9 +100,10 @@ def login_task(config_string):
         try:
             config_data = json.loads(config_string)
         except json.JSONDecodeError:
-            logging.info("ERROR: config.json error format！")
+            logging.error("ERROR: config.json error format！")
             config_data = None
             error_flag = True
+            exit(1)
             return
 
         #if(config_data):
