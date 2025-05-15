@@ -98,7 +98,7 @@ def login_task(config_string):
         # password = os.environ['PASSWORD']
         multi_user_mode = False
         try:
-            config_data = json.load(config_string)
+            config_data = json.loads(config_string)
         except json.JSONDecodeError:
             logging.info("ERROR: config.json error format！")
             config_data = None
@@ -126,7 +126,7 @@ def login_task(config_string):
             
 
     except Exception as e:
-        logging.error('Failed to read user credential: ',e)
+        logging.error('Failed to read user credential: %s',e)
         error_flag = True
         exit(1)
         return
