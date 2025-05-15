@@ -14,6 +14,8 @@ import schedule
 import json
 from Users import User
 
+error_flag = False
+
 @retry(wait_random_min=5000, wait_random_max=10000, stop_max_attempt_number=3)
 def enter_iframe(browser):
     try:
@@ -162,13 +164,13 @@ def login_task(config_string):
                 logging.info("Script executed successfully")
                 exit(0)
     
-if __name__ == '__main__':   
+if __name__ == '__main__':  
     logging.basicConfig(level=logging.INFO,format='[%(levelname)s] %(asctime)s %(message)s')
     
     config_data = os.environ["CONFIG"]
     if config_data:
         login_task(config_data)
-        if(error_flag):
+        if error_flag:
             exit(1)
     
     else:
