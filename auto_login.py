@@ -128,7 +128,7 @@ def login_task(config_string):
     except Exception as e:
         logging.error('Failed to read user credential: ',e)
         error_flag = True
-        # exit(1)
+        exit(1)
         return
     else:
         if multi_user_mode == True:  # multi user mode
@@ -144,25 +144,25 @@ def login_task(config_string):
                     extension_login(email=email,password=password,userDataDir=userDataDir,profile_name=profile_name, cookie=login_cookie)
                 except Exception as e:
                     logging.error("Failure in auto login of user (%s) :%s",name, e)
-                    # exit(1)
+                    exit(1)
                 else:
                     logging.info("User (%s) script executed successfully", name)
-                    # exit(0)
+                    exit(0)
         
         else:  # single user
             try:
                 extension_login(email=email,password=password,userDataDir=userDataDir,cookie=login_cookie)
             except Exception as e:
                 logging.error("Failure in auto login: %s", e)
-                # exit(1)
+                exit(1)
             else:
                 logging.info("Script executed successfully")
-                # exit(0)
+                exit(0)
     
 if __name__ == '__main__':   
     logging.basicConfig(level=logging.INFO,format='[%(levelname)s] %(asctime)s %(message)s')
    
-    config_data = os.environ["config"]
+    config_data = os.environ["CONFIG"]
     if config_data:
         login_task(config_data)
     
