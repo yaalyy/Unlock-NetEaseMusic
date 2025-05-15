@@ -24,13 +24,14 @@ It's run by Github Actions, so no self-hosted server is needed(This feature is *
 
 ### Run by local browser cache (Recommended)
 1. Open the Chrome on your local computer to login Netease Music, then use Inspect tool of the Chrome to find the cookie named `MUSIC_U` and copy its value for the later use.  
+If you find it difficult to use Inspect tool to obtain cookie, you can use our help procedure to automatically obtain, by executing `python cookie_extract.py`. In this case, you are given 30 seconds to login, and the obtained cookie will be printed on the terminal. 
 2. Install python packages: `pip install -r requirements.txt `   
 3. When run by local browser cache, the email, password, userDataDir and profileName in `config.json` are not needed, so you can fill in them casually.  
 Enter the value of login_cookie that we obtained in step 1.  
 ~~Enter your chrome profile path in `config.json`, this path is usually `C:\\Users\\YourUser\\AppData\\Local\\Google\\Chrome\\User Data` for Windows. This path can also be found in `chrome://version/`.~~     
 
-1. Set the timer for repeating the task.  
-2. Run `local_login.py`  
+4. Set the timer for repeating the task.  
+5. Run `local_login.py`  
 ## config.json Template
 We support single user mode and multi-user mode.  
 **Single User**:  
