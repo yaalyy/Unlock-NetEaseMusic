@@ -1,11 +1,12 @@
 {
     "users": [
         {
-            "userDataDir": "C:\\Users\\YourUser\\AppData\\Local\\Google\\Chrome\\User Data",
+            "userDataDir": "C:\\Users\\xxxx\\AppData\\Local\\Google\\Chrome\\User Data",
             "email": "test",
             "password": "test123",
-            "name": "tt",
-            "profileName": "profile 1"
+            "name": "me",
+            "profileName": "Profile 3",
+            "login_cookie": "xxxx"
         }
     ]
 
