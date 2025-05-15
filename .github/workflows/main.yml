@@ -3,7 +3,7 @@ name: Unlock-NetEaseMusic
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '37 */8 * * *'
+    - cron:  '37 2 * * *'
   workflow_dispatch:
 
 jobs:
@@ -20,8 +20,7 @@ jobs:
 
     - name: Login and unlock
       env:
-        EMAIL: ${{secrets.EMAIL}}
-        PASSWORD: ${{secrets.PASSWORD}}
+        CONFIG: ${{secrets.CONFIG}}
         PYTHONIOENCODING: utf-8
         PYTHONLEGACYWINDOWSSTDIO: utf-8
       run: python auto_login.py
