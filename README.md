@@ -2,18 +2,18 @@
 
 Use the Chrome extension NetEaseMusicWorld+ to unlock overseas NetEase Music access.
 
-It's run by Github Actions, so no self-hosted server is needed(This feature is **maintaining**, not available). Alternatively, you can run by local browser cache.  
+It's run by Github Actions, so no self-hosted server is needed. Alternatively, you can run by local browser cache.  
 
 ## System Requirements  
 :white_check_mark:Windows 8.1/10/11   
 :x:Linux (Not Supported, developing)  
 :x:MacOS (Not Supported, developing)  
 
-## How to run on Github  (May be intercepted by CAPTCHA in oversea)
+## How to run on Github (Need manual login at the first time to obtain cookie)
 
-~~1. Fork this repository (and star if you like it)~~  
-~~2. In your own repository, enter your email and password as the value of two Github Action repository   secrets `EMAIL` and `PASSWORD` .~~  
-~~3. Run Github Action `Unlock-NetEaseMusic` (It will run automatically every day.)~~
+1. Fork this repository (and star if you like it)  
+2. In your own repository, enter your config json that should be in [`config.json`](./config.json "`config.json`") as the value of Github Action repository secrets `CONFIG`.  
+3. Run Github Action `Unlock-NetEaseMusic` (It will run automatically every day.)
 
 ## How to run locally
 
@@ -26,12 +26,12 @@ It's run by Github Actions, so no self-hosted server is needed(This feature is *
 1. Open the Chrome on your local computer to login Netease Music, then use Inspect tool of the Chrome to find the cookie named `MUSIC_U` and copy its value for the later use.  
 If you find it difficult to use Inspect tool to obtain cookie, you can use our help procedure to automatically obtain, by executing `python cookie_extract.py`. In this case, you are given 30 seconds to login, and the obtained cookie will be printed on the terminal. 
 2. Install python packages: `pip install -r requirements.txt `   
-3. When run by local browser cache, the email, password, userDataDir and profileName in `config.json` are not needed, so you can fill in them casually.  
+3. When run by local browser cache, the email, password, userDataDir and profileName in [`config.json`](./config.json "`config.json`") are not needed, so you can fill in them casually.  
 Enter the value of login_cookie that we obtained in step 1.  
 ~~Enter your chrome profile path in `config.json`, this path is usually `C:\\Users\\YourUser\\AppData\\Local\\Google\\Chrome\\User Data` for Windows. This path can also be found in `chrome://version/`.~~     
 
 4. Set the timer for repeating the task.  
-5. Run `local_login.py`  
+5. Run `python local_login.py`  
 ## config.json Template
 We support single user mode and multi-user mode.  
 **Single User**:  
