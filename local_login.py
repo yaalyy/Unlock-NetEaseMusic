@@ -48,8 +48,6 @@ def extension_login(email, password, userDataDir, profile_name=None, cookie=None
         if(not cookie):
             raise Exception("Not found login cookie")
         
-        browser.add_cookie({"name": "MUSIC_U", "value": "222", "domain": "google.com"})
-        #print("inserted cookie")
 
         # 设置全局的隐式等待(直到找到元素),20秒后找不到抛出找不到元素
         browser.implicitly_wait(20)
@@ -57,9 +55,12 @@ def extension_login(email, password, userDataDir, profile_name=None, cookie=None
         logging.info("Getting the webpage")
         browser.get('https://music.163.com')
         
+        browser.add_cookie({"name": "MUSIC_U", "value": cookie, "httpOnly": True})
+        #print("inserted cookie")
 
         browser.refresh() # 刷新页面
         time.sleep(5)
+
 
         # 进入音乐清单
         logging.info("Click my playlist")
