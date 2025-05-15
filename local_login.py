@@ -29,18 +29,27 @@ def enter_iframe(browser):
 
 # 失败后随机 1-3s 后重试，最多 3 次
 @retry(wait_random_min=1000, wait_random_max=3000, stop_max_attempt_number=3)
-def extension_login(email, password,userDataDir, profile_name=None):
+def extension_login(email, password, userDataDir, profile_name=None, cookie=None):
     try:
         chrome_options = webdriver.ChromeOptions()
         #chrome_options.add_argument("headless")  # Headless mode(Browser running in backend)
-        chrome_options.add_argument("user-data-dir="+userDataDir)
-        if profile_name:
-            chrome_options.add_argument("profile-directory="+profile_name)
+
+        #chrome_options.add_argument("user-data-dir="+userDataDir)
+        #if profile_name:
+        #    chrome_options.add_argument("profile-directory="+profile_name)
+
+        
         logging.info("Load Chrome extension NetEaseMusicWorldPlus")
         chrome_options.add_extension('NetEaseMusicWorldPlus.crx')
 
         logging.info("Load Chrome driver")
         browser = webdriver.Chrome(executable_path="chromedriver.exe", options=chrome_options)
+
+        if(not cookie):
+            raise Exception("Not found login cookie")
+        
+        browser.add_cookie({"name": "MUSIC_U", "value": "222", "domain": "google.com"})
+        #print("inserted cookie")
 
         # 设置全局的隐式等待(直到找到元素),20秒后找不到抛出找不到元素
         browser.implicitly_wait(20)
@@ -112,11 +121,13 @@ def login_task():
                 password = user["password"]
                 userDataDir = user["userDataDir"]  # path of Chrome profile
                 profile_name = user["profileName"]
-                users.append(User(name = name, email = email, password = password, userDataDir = userDataDir, profileName=profile_name))
+                login_cookie = user["login_cookie"]
+                users.append(User(name = name, email = email, password = password, userDataDir = userDataDir, profileName=profile_name, cookie=login_cookie))
         else:
             email=config_data["email"]
             password=config_data["password"]
             userDataDir = config_data["userDataDir"]  # path of Chrome profile
+            login_cookie = config_data["login_cookie"]
             
 
     except Exception as e:
@@ -132,9 +143,10 @@ def login_task():
                 userDataDir = user.getUserDataDir()
                 name = user.getName()
                 profile_name = user.getProfileName()
+                login_cookie = user.getCookie()
                 try:
                     logging.info("Start auto login of user (%s)", name)
-                    extension_login(email=email,password=password,userDataDir=userDataDir,profile_name=profile_name)
+                    extension_login(email=email,password=password,userDataDir=userDataDir,profile_name=profile_name, cookie=login_cookie)
                 except Exception as e:
                     logging.error("Failure in auto login of user (%s) :%s",name, e)
                     # exit(1)
@@ -144,7 +156,7 @@ def login_task():
         
         else:  # single user
             try:
-                extension_login(email=email,password=password,userDataDir=userDataDir)
+                extension_login(email=email,password=password,userDataDir=userDataDir,cookie=login_cookie)
             except Exception as e:
                 logging.error("Failure in auto login: %s", e)
                 # exit(1)
