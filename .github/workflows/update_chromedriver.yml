@@ -33,9 +33,9 @@ jobs:
 
       - name: Replace Old Chromedriver
         run: |
-          mv chromedriver_new/chromedriver-win64/chromedriver.exe ./chromedriver.exe
+          mv chromedriver_new/chromedriver-win64/chromedriver.exe ./chromedriver/win64/chromedriver.exe
           rm -rf chromedriver_new
-          chmod +x chromedriver.exe
+          chmod +x ./chromedriver/win64/chromedriver.exe
 
       - name: Check for Changes
         id: check_changes
@@ -53,6 +53,6 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add chromedriver.exe
-          git commit -m "Update Chromedriver to version ${LATEST_VERSION}"
+          git add ./chromedriver/win64/chromedriver.exe
+          git commit -m "Updated Chromedriver-win64 to version ${LATEST_VERSION}"
           git push
