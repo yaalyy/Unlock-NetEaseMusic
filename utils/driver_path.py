@@ -1,4 +1,4 @@
-from check_platform import detect_platform
+from utils.check_platform import detect_platform
 from pathlib import Path
 
 def get_driver_path():
