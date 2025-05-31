@@ -7,7 +7,7 @@ def extract_cookie():
     chrome_options = webdriver.ChromeOptions()
 
     logging.info("Load Chrome driver")
-    browser = webdriver.Chrome(executable_path="chromedriver.exe", options=chrome_options)
+    browser = webdriver.Chrome(executable_path="/chromedriver/win64/chromedriver.exe", options=chrome_options)
 
     browser.implicitly_wait(20)
 

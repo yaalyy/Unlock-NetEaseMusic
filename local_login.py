@@ -43,7 +43,7 @@ def extension_login(email=None, password=None, userDataDir=None, profile_name=No
         chrome_options.add_extension('NetEaseMusicWorldPlus.crx')
 
         logging.info("Load Chrome driver")
-        browser = webdriver.Chrome(executable_path="chromedriver.exe", options=chrome_options)
+        browser = webdriver.Chrome(executable_path="chromedriver/win64/chromedriver.exe", options=chrome_options)
 
         if(not cookie):
             raise Exception("Not found login cookie")
