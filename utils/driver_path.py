@@ -17,9 +17,9 @@ def get_driver_path():
     elif system == "linux32": # Linux 32-bit
         raise Exception("Linux-32 detected, which is not supported for now.")
     elif system == "win64":  # Windows 64-bit
-        return str(Path("chromedriver/win64/chromedriver.exe"))
+        return str(Path("./chromedriver/win64/chromedriver.exe").resolve())
     elif system == "linux64":  # Linux 64-bit
-        return str(Path("chromedriver/linux64/chromedriver"))
+        return str(Path("./chromedriver/linux64/chromedriver").resolve())
     elif system == "macx64":
         raise Exception("MacOSX64 detected, which is not supported for now.")
     elif system == "macarm64":
