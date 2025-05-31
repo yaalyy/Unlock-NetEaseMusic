@@ -1,5 +1,6 @@
 import time, logging
 from selenium import webdriver
+from utils.driver_path import get_driver_path
 
 timer = 30 # time for manual login, unit of seconds, 
 
@@ -7,7 +8,7 @@ def extract_cookie():
     chrome_options = webdriver.ChromeOptions()
 
     logging.info("Load Chrome driver")
-    browser = webdriver.Chrome(executable_path="/chromedriver/win64/chromedriver.exe", options=chrome_options)
+    browser = webdriver.Chrome(executable_path=get_driver_path(), options=chrome_options)
 
     browser.implicitly_wait(20)
 
