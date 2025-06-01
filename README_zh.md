@@ -12,7 +12,7 @@
 ## 如何在 Github 上运行（首次需要手动登录以获取 Cookie）
 
 1. Fork 本仓库（喜欢的话可以点个 star）  
-2. 在你自己的仓库中，将你的配置 json（应为 [`config.json`](./config.json "`config.json`")）作为 Github Action 仓库密钥 `CONFIG` 的值输入。  
+2. 在你自己的仓库中，将你的本应该填入在 [`config.json`](./config.json "`config.json`")中的配置 json作为 Github Action 仓库secrets命名为`CONFIG` 的值输入，但是**不要**填入JSON文件中会暴露cookie。  
 3. 运行 Github Action `Unlock-NetEaseMusic`（它会每天自动运行一次。）
 
 ## 如何在本地运行

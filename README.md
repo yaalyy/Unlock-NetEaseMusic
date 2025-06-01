@@ -12,7 +12,7 @@ It's run by Github Actions, so no self-hosted server is needed. Alternatively, y
 ## How to run on Github (Need manual login at the first time to obtain cookie)
 
 1. Fork this repository (and star if you like it)  
-2. In your own repository, enter your config json that should be in [`config.json`](./config.json "`config.json`") as the value of Github Action repository secrets `CONFIG`.  
+2. In your own repository, enter your config json that should be filled in [`config.json`](./config.json "`config.json`") as the value of Github Action repository secrets named `CONFIG`, but **DO NOT** fill in the JSON file to expose cookies.  
 3. Run Github Action `Unlock-NetEaseMusic` (It will run automatically every day.)
 
 ## How to run locally
