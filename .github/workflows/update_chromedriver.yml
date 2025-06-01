@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  update-chromedriver:
+  update-chromedriver(win64):
     runs-on: ubuntu-latest
 
     steps:
@@ -56,3 +56,58 @@ jobs:
           git add ./chromedriver/win64/chromedriver.exe
           git commit -m "Updated Chromedriver-win64 to version ${LATEST_VERSION}"
           git push
+  
+
+  update-chromedriver(linux64):
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Get Latest Stable Chromedriver Info
+        id: get_version
+        run: |
+          JSON_DATA=$(curl -s "https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json")
+          LATEST_VERSION=$(echo $JSON_DATA | jq -r '.channels.Stable.version')
+          DOWNLOAD_URL=$(echo $JSON_DATA | jq -r '.channels.Stable.downloads.chromedriver[0].url')
+
+          echo "Latest version: $LATEST_VERSION"
+          echo "Download URL: $DOWNLOAD_URL"
+
+          echo "LATEST_VERSION=$LATEST_VERSION" >> $GITHUB_ENV
+          echo "DOWNLOAD_URL=$DOWNLOAD_URL" >> $GITHUB_ENV
+
+      - name: Download Latest Chromedriver (Linux64)
+        run: |
+          wget -q "$DOWNLOAD_URL" -O chromedriver_linux64.zip
+          unzip -o chromedriver_linux64.zip -d chromedriver_new
+          rm chromedriver_linux64.zip
+
+      - name: Replace Old Chromedriver
+        run: |
+          mv chromedriver_new/chromedriver-linux64/chromedriver ./chromedriver/linux64/chromedriver
+          rm -rf chromedriver_new
+          chmod +x ./chromedriver/linux64/chromedriver
+
+      - name: Check for Changes
+        id: check_changes
+        run: |
+          if git diff --quiet; then
+            echo "No updates found."
+            echo "HAS_CHANGES=false" >> $GITHUB_ENV
+          else
+            echo "Chromedriver updated!"
+            echo "HAS_CHANGES=true" >> $GITHUB_ENV
+          fi
+
+      - name: Commit and Push Changes
+        if: env.HAS_CHANGES == 'true'
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add ./chromedriver/linux64/chromedriver
+          git commit -m "Updated Chromedriver-linux64 to version ${LATEST_VERSION}"
+          git push
+
+    
