@@ -1,6 +1,6 @@
 # Unlock-NetEaseMusic
 
-Use the Chrome extension NetEaseMusicWorld+ to unlock overseas NetEase Music access.
+Use the Chrome extension NetEaseMusicWorld++ to unlock overseas NetEase Music access.
 
 It's run by Github Actions, so no self-hosted server is needed. Alternatively, you can run by local browser cache.  
 
@@ -76,7 +76,7 @@ Each cookie obtained by login has about 1-month expire duration, which is not va
 
 ## How it works
 
-When you login to https://music.163.com in Chrome the extension NetEaseMusicWorld+ will automatically run a script to make NetEase believe that your IP is in China. Once this is done, NetEase will allow you to access music in all platforms (e.g. on phone apps) for a short time (unclear) even if you access from a foreign IP.
+When you login to https://music.163.com in Chrome the extension NetEaseMusicWorld++ will automatically run a script to make NetEase believe that your IP is in China. Once this is done, NetEase will allow you to access music in all platforms (e.g. on phone apps) for a short time (unclear) even if you access from a foreign IP.
 
 The Github Action will run daily to do the above actions and unlock you from the foreign IP restriction.  
 
