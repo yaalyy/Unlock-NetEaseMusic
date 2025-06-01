@@ -5,8 +5,8 @@
 本项目通过 Github Actions 运行，无需自建服务器。你也可以通过本地浏览器缓存运行。
 
 ## 系统要求  
-:white_check_mark:Windows 8.1/10/11   
-:x:Linux（暂不支持，开发中）  
+:white_check_mark:Windows 8.1/10/11 (x64)  
+:white_check_mark:Linux（仅支持 X64 CPU）  
 :x:MacOS（暂不支持，开发中）  
 
 ## 如何在 Github 上运行（首次需要手动登录以获取 Cookie）

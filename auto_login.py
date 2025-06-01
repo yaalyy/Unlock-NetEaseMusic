@@ -10,9 +10,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service as ChromeService
-import schedule
 import json
 from Users import User
+from utils.driver_path import get_driver_path
 
 error_flag = False
 
@@ -34,7 +34,7 @@ def enter_iframe(browser):
 def extension_login(email=None, password=None, userDataDir=None, profile_name=None, cookie=None):
     try:
         chrome_options = webdriver.ChromeOptions()
-        #chrome_options.add_argument("headless")  # Headless mode(Browser running in backend)
+        chrome_options.add_argument("headless")  # Headless mode(Browser running in backend)
 
         #chrome_options.add_argument("user-data-dir="+userDataDir)
         #if profile_name:
@@ -45,7 +45,7 @@ def extension_login(email=None, password=None, userDataDir=None, profile_name=No
         chrome_options.add_extension('NetEaseMusicWorldPlus.crx')
 
         logging.info("Load Chrome driver")
-        browser = webdriver.Chrome(executable_path="chromedriver.exe", options=chrome_options)
+        browser = webdriver.Chrome(executable_path=get_driver_path(), options=chrome_options)
 
         if(not cookie):
             raise Exception("Not found login cookie")

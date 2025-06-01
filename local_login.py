@@ -13,6 +13,8 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 import schedule
 import json
 from Users import User
+from utils.driver_path import get_driver_path
+
 
 @retry(wait_random_min=5000, wait_random_max=10000, stop_max_attempt_number=3)
 def enter_iframe(browser):
@@ -43,7 +45,7 @@ def extension_login(email=None, password=None, userDataDir=None, profile_name=No
         chrome_options.add_extension('NetEaseMusicWorldPlus.crx')
 
         logging.info("Load Chrome driver")
-        browser = webdriver.Chrome(executable_path="chromedriver.exe", options=chrome_options)
+        browser = webdriver.Chrome(executable_path=get_driver_path(), options=chrome_options)
 
         if(not cookie):
             raise Exception("Not found login cookie")
