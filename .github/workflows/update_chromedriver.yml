@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  update-chromedriver(win64):
+  update-chromedriver-win64:
     runs-on: ubuntu-latest
 
     steps:
@@ -58,7 +58,7 @@ jobs:
           git push
   
 
-  update-chromedriver(linux64):
+  update-chromedriver-linux64:
     runs-on: ubuntu-latest
 
     steps:
