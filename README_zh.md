@@ -31,7 +31,12 @@
 ~~在 `config.json` 中填写你的 Chrome 用户配置路径，Windows 下通常为 `C:\\Users\\YourUser\\AppData\\Local\\Google\\Chrome\\User Data`，也可以在 `chrome://version/` 页面找到。~~     
 
 1. 设置定时任务以重复执行。  
-2. 运行 `python local_login.py`  
+2. 运行 `python local_login.py`   
+
+### 通过 Docker 运行
+1. 使用 `docker build -t netease .` 构建 Docker 镜像。
+2. 按照 [通过本地浏览器缓存运行](#通过本地浏览器缓存运行推荐) 的第 1 步获取登录 Cookie。
+3. 在 [`config.json`](./config.json "`config.json`") 中填写配置后，使用 `docker run -v $PWD/config.json:/app/config.json netease` 将json文件挂载到Docker容器中并启动。  
 
 ## config.json 模板
 支持单用户模式和多用户模式。  
