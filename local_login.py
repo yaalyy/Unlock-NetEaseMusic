@@ -37,6 +37,7 @@ def extension_login(email=None, password=None, userDataDir=None, profile_name=No
         chrome_options.add_argument("headless")  # Headless mode(Browser running in backend)
         if os.environ.get("CHROME_NO_SANDBOX") == "1":
             chrome_options.add_argument("--no-sandbox")  # This is required for docker environments
+            chrome_options.add_argument("--disable-dev-shm-usage")  # Avoid shared memory limits in container environments
 
         #chrome_options.add_argument("user-data-dir="+userDataDir)
         #if profile_name:
