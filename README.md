@@ -32,6 +32,12 @@ Enter the value of login_cookie that we obtained in step 1.
 
 4. Set the timer for repeating the task.  
 5. Run `python local_login.py`  
+
+### Run by Docker
+1. Run `docker build -t netease .` to build the Docker image.  
+2. Follow the step 1 in [Run by local browser cache](#run-by-local-browser-cache-recommended) to obtain the login cookie.  
+3. After filling config json into [`config.json`](./config.json "`config.json`"), run `docker run -v $PWD/config.json:/app/config.json netease` to launch the Docker container and mount the json file.  
+     
 ## config.json Template
 We support single user mode and multi-user mode.  
 **Single User**:  
