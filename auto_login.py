@@ -1,18 +1,11 @@
 # coding: utf-8
 
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 import time,os,logging
 from retrying import retry
-
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.service import Service as ChromeService
 import json
 from Users import User
-from utils.driver_path import get_driver_path
 
 error_flag = False
 
@@ -170,6 +163,7 @@ def login_task(config_string):
                 exit(0)
     
 if __name__ == '__main__':  
+    # Setting up logging
     logging.basicConfig(level=logging.INFO,format='[%(levelname)s] %(asctime)s %(message)s')
     
     config_data = os.environ["CONFIG"]
