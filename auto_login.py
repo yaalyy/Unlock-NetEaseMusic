@@ -38,7 +38,7 @@ error_flag = False
 @retry(wait_random_min=1000, wait_random_max=3000, stop_max_attempt_number=3)
 def extension_login(email=None, password=None, userDataDir=None, profile_name=None, cookie=None):
     try:
-        chrome_options = webdriver.ChromeOptions()
+        chrome_options = webdriver.EdgeOptions()
         chrome_options.add_argument("headless")  # Headless mode(Browser running in backend)
 
         #chrome_options.add_argument("user-data-dir="+userDataDir)
@@ -50,7 +50,7 @@ def extension_login(email=None, password=None, userDataDir=None, profile_name=No
         chrome_options.add_extension('NetEaseMusicWorldPlus.crx')
 
         logging.info("Load Chrome driver")
-        browser = webdriver.Chrome(options=chrome_options)
+        browser = webdriver.Edge(options=chrome_options)
 
         if(not cookie):
             raise Exception("Not found login cookie")

@@ -11,8 +11,15 @@ RUN wget -O- https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor >
     apt-get install -y google-chrome-stable --no-install-recommends && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
+# Install Microsoft Edge
+RUN wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | gpg --dearmor > /usr/share/keyrings/microsoft-edge.gpg && \
+    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft-edge.gpg] https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge.list && \
+    apt-get update && \
+    apt-get install -y microsoft-edge-stable --no-install-recommends && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
 # verify installation
-RUN python --version && google-chrome --version
+RUN python --version && google-chrome --version && microsoft-edge --version
 
 # Copy project files
 WORKDIR /app

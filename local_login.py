@@ -35,7 +35,7 @@ from utils.driver_path import get_driver_path
 @retry(wait_random_min=1000, wait_random_max=3000, stop_max_attempt_number=3)
 def extension_login(email=None, password=None, userDataDir=None, profile_name=None, cookie=None):
     try:
-        chrome_options = webdriver.ChromeOptions()
+        chrome_options = webdriver.EdgeOptions()
         chrome_options.add_argument("headless")  # Headless mode(Browser running in backend)
         if os.environ.get("CHROME_NO_SANDBOX") == "1":
             chrome_options.add_argument("--no-sandbox")  # This is required for docker environments
@@ -50,7 +50,7 @@ def extension_login(email=None, password=None, userDataDir=None, profile_name=No
         chrome_options.add_extension('NetEaseMusicWorldPlus.crx')
 
         logging.info("Load Chrome driver")
-        browser = webdriver.Chrome(options=chrome_options)
+        browser = webdriver.Edge(options=chrome_options)
 
         if(not cookie):
             raise Exception("Not found login cookie")
