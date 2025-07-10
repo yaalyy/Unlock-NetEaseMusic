@@ -4,6 +4,7 @@ Use the Chrome extension NetEaseMusicWorld++ to unlock overseas NetEase Music ac
 
 It's run by Github Actions, so no self-hosted server is needed. Alternatively, you can run by local browser cache.  
 
+Chinese Documentation is available in [中文文档](./README_zh.md "中文文档").  
 ## System Requirements  
 :white_check_mark:Windows 8.1/10/11 (x64)  
 :white_check_mark:Linux (Only for X64 CPU)  
@@ -24,7 +25,7 @@ It's run by Github Actions, so no self-hosted server is needed. Alternatively, y
 
 ### Run by local browser cache (Recommended)
 1. Open the Chrome on your local computer to login Netease Music, then use Inspect tool of the Chrome to find the cookie named `MUSIC_U` and copy its value for the later use.  
-If you find it difficult to use Inspect tool to obtain cookie, you can use our help procedure to automatically obtain, by executing `python cookie_extract.py`. In this case, you are given 30 seconds to login, and the obtained cookie will be printed on the terminal. 
+If you find it difficult to use Inspect tool to obtain cookie, you can use our help procedure to automatically obtain, by executing `python cookie_extract.py`. In this case, the browser will be automatically opened for you to login, after completing the login, press *Enter* to continue and the obtained cookie will be printed on the terminal. 
 2. Install python packages: `pip install -r requirements.txt `   
 3. When run by local browser cache, the **email**, **password**, **userDataDir** and **profileName** in [`config.json`](./config.json "`config.json`") are not needed, so you can casually fill them in or leave them blank. **HOWEVER**, these fields must **NOT** be deleted from the json file, otherwise it will prevent json from being read.    
 Enter the value of login_cookie that we obtained in step 1.  
