@@ -1,19 +1,13 @@
 # coding: utf-8
 
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 import time,os,logging
 from retrying import retry
-
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.service import Service as ChromeService
 import schedule
 import json
 from Users import User
-from utils.driver_path import get_driver_path
+from logging.handlers import TimedRotatingFileHandler
 
 """Abandoned code"""
 # @retry(wait_random_min=5000, wait_random_max=10000, stop_max_attempt_number=3)
@@ -173,7 +167,25 @@ def login_task():
                 # exit(0)
     
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO,format='[%(levelname)s] %(asctime)s %(message)s')
+    # created logs directory
+    if not os.path.exists('logs'):
+        os.makedirs('logs')
+
+    # Setting up logging
+    log_formatter = logging.Formatter('[%(levelname)s] %(asctime)s %(message)s')
+    log_file_path = os.path.join('logs', 'netease_music.log')
+    
+    file_handler = TimedRotatingFileHandler(log_file_path, when='midnight', interval=1, backupCount=30, encoding='utf-8')
+    file_handler.setFormatter(log_formatter)
+    file_handler.setLevel(logging.INFO)
+
+    console = logging.StreamHandler()
+    console.setLevel(logging.INFO)
+    console.setFormatter(log_formatter)
+
+    logging.basicConfig(level=logging.INFO, handlers=[file_handler, console])
+
+    # Setting up scheduler
     schedule_logger = logging.getLogger("schedule")
     schedule_logger.setLevel(level=logging.DEBUG)
     
