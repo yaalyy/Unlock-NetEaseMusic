@@ -84,8 +84,8 @@ def extension_login(email=None, password=None, userDataDir=None, profile_name=No
             raise
 
         # 播放音乐
-        logging.info("Play the music")
-        browser.find_element(By.ID, 'flag_play').click()
+        #logging.info("Play the music")
+        #browser.find_element(By.ID, 'flag_play').click()
 
         time.sleep(20)
         browser.refresh() # 刷新页面
