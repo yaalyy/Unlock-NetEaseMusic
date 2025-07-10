@@ -15,19 +15,21 @@ import json
 from Users import User
 from utils.driver_path import get_driver_path
 
+"""Abandoned code"""
+# @retry(wait_random_min=5000, wait_random_max=10000, stop_max_attempt_number=3)
+# def enter_iframe(browser):
+#     try:
+#         logging.info("Enter login iframe")
+#         target = browser.find_element_by_xpath("//*[starts-with(@id,'x-URS-iframe')]")
+#         # browser.execute_script('arguments[0].scrollIntoView(true);', target)
+#         browser.switch_to.frame(target)
 
-@retry(wait_random_min=5000, wait_random_max=10000, stop_max_attempt_number=3)
-def enter_iframe(browser):
-    try:
-        logging.info("Enter login iframe")
-        target = browser.find_element_by_xpath("//*[starts-with(@id,'x-URS-iframe')]")
-        # browser.execute_script('arguments[0].scrollIntoView(true);', target)
-        browser.switch_to.frame(target)
+#         return browser
+#     except Exception as e:
+#         logging.error("Error entering iframe: %s", e)
+#         raise
 
-        return browser
-    except Exception as e:
-        logging.error("Error entering iframe: %s", e)
-        raise
+
 
 # 失败后随机 1-3s 后重试，最多 3 次
 @retry(wait_random_min=1000, wait_random_max=3000, stop_max_attempt_number=3)
@@ -48,7 +50,7 @@ def extension_login(email=None, password=None, userDataDir=None, profile_name=No
         chrome_options.add_extension('NetEaseMusicWorldPlus.crx')
 
         logging.info("Load Chrome driver")
-        browser = webdriver.Chrome(executable_path=get_driver_path(), options=chrome_options)
+        browser = webdriver.Chrome(options=chrome_options)
 
         if(not cookie):
             raise Exception("Not found login cookie")
@@ -61,7 +63,7 @@ def extension_login(email=None, password=None, userDataDir=None, profile_name=No
         browser.get('https://music.163.com')
         
         browser.add_cookie({"name": "MUSIC_U", "value": cookie, "httpOnly": True})
-        #print("inserted cookie")
+        logging.info("Inserted cookie")
 
         browser.refresh() # 刷新页面
         time.sleep(5)
@@ -69,7 +71,7 @@ def extension_login(email=None, password=None, userDataDir=None, profile_name=No
 
         # 进入音乐清单
         logging.info("Click my playlist")
-        browser.find_element_by_xpath('//a[.//em[text()="我的音乐"]]').click()
+        browser.find_element(By.XPATH, '//a[.//em[text()="我的音乐"]]').click()
 
         time.sleep(10)
 
