@@ -5,10 +5,11 @@ Use the Chrome extension NetEaseMusicWorld++ to unlock overseas NetEase Music ac
 It's run by Github Actions, so no self-hosted server is needed. Alternatively, you can run by local browser cache.  
 
 Chinese Documentation is available in [中文文档](./README_zh.md "中文文档").  
+
 ## System Requirements  
 :white_check_mark:Windows 8.1/10/11 (x64)  
 :white_check_mark:Linux (Only for X64 CPU)  
-:x:MacOS (Not Supported, developing)  
+:x:MacOS (In developing. It does work somehow, but unknown bug exists, recommend to use Docker)  
 
 ## How to run on Github (Need manual login at the first time to obtain cookie)
 

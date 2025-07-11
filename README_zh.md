@@ -7,7 +7,7 @@
 ## 系统要求  
 :white_check_mark:Windows 8.1/10/11 (x64)  
 :white_check_mark:Linux（仅支持 X64 CPU）  
-:x:MacOS（暂不支持，开发中）  
+:x:MacOS（开发中, 尽管可运行但可能存在bug, 建议使用Docker）  
 
 ## 如何在 Github 上运行（首次需要手动登录以获取 Cookie）
 
