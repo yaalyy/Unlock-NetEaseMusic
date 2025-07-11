@@ -24,7 +24,7 @@
 
 ### 通过本地浏览器缓存运行（推荐）
 1. 在本地电脑上打开 Chrome 并登录网易云音乐，然后使用 Chrome 的调试工具查找名为 `MUSIC_U` 的 Cookie，并复制其值备用。  
-如果你觉得用调试工具获取 Cookie 有难度，可以通过执行 `python cookie_extract.py` 使用我们的帮助程序自动获取。在这种方式下，浏览器会被自动弹出用于登录，当您完成登录后，在终端中输入回车，获取到的 Cookie 会在终端打印出来。
+如果你感到用调试工具获取 Cookie 有难度，可以通过执行 `python cookie_extract.py` 使用我们的帮助程序自动获取。在这种方式下，浏览器会被自动弹出用于登录，当您完成登录后，在终端中输入回车，获取到的 Cookie 会在终端打印出来。
 2. 安装 Python 依赖包：`pip install -r requirements.txt`   
 3. 通过本地浏览器缓存运行时，[`config.json`](./config.json "`config.json`") 中的 **email**、**password**、**userDataDir** 和 **profileName** 不再被需要，可以随意填写或留白。但是绝对**不要**删除这些字段，否则会影响JSON文件读写。  
 将在第 1 步获取到的 login_cookie 填入。  
