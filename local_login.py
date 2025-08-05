@@ -167,6 +167,8 @@ def login_task():
                 # exit(0)
     
 if __name__ == '__main__':
+    os.environ["SE_DRIVER_MIRROR_URL"] = "https://msedgedriver.microsoft.com"  # Set the temp mirror URL for Edge driver
+    
     # created logs directory
     if not os.path.exists('logs'):
         os.makedirs('logs')
