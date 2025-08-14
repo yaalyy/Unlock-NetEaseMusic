@@ -7,9 +7,9 @@ It's run by Github Actions, so no self-hosted server is needed. Alternatively, y
 Chinese Documentation is available in [中文文档](./README_zh.md "中文文档").  
 
 ## System Requirements  
-:white_check_mark:Windows 8.1/10/11 (x64)  
-:white_check_mark:Linux (Only for X64 CPU)  
-:x:MacOS (In developing. It does work somehow, but unknown bug exists, recommend to use Docker)  
+:white_check_mark:Windows 8.1/10/11 (x86_64)  
+:white_check_mark:Linux (Only for x86_64 CPU)  
+:white_check_mark:MacOS  
 
 ## How to run on Github (Need manual login at the first time to obtain cookie)
 
@@ -35,7 +35,8 @@ Enter the value of login_cookie that we obtained in step 1.
 4. Set the timer for repeating the task.  
 5. Run `python local_login.py`  
 
-### Run by Docker
+### Run by Docker  
+**Note**: This method only supports **x86_64** architecture CPU  
 1. Run `docker build -t netease .` to build the Docker image.  
 2. Follow the step 1 in [Run by local browser cache](#run-by-local-browser-cache-recommended) to obtain the login cookie.  
 3. After filling config json into [`config.json`](./config.json "`config.json`"), run `docker run -v $PWD/config.json:/app/config.json netease` to launch the Docker container and mount the json file.  

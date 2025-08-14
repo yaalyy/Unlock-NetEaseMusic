@@ -7,7 +7,7 @@
 ## 系统要求  
 :white_check_mark:Windows 8.1/10/11 (x64)  
 :white_check_mark:Linux（仅支持 X64 CPU）  
-:x:MacOS（开发中, 尽管可运行但可能存在bug, 建议使用Docker）  
+:white_check_mark:MacOS  
 
 ## 如何在 Github 上运行（首次需要手动登录以获取 Cookie）
 
@@ -33,8 +33,9 @@
 4. 设置定时任务以重复执行。  
 5. 运行 `python local_login.py`  
 
-### 通过 Docker 运行
-1. 使用 `docker build -t netease .` 构建 Docker 镜像。
+### 通过 Docker 运行  
+**注意**：此方法仅支持 **x86_64** 架构CPU  
+1. 使用 `docker build -t netease .` 构建 Docker 镜像。  
 2. 按照 [通过本地浏览器缓存运行](#通过本地浏览器缓存运行推荐) 的第 1 步获取登录 Cookie。  
 3. 在 [`config.json`](./config.json "`config.json`") 中填写配置后，使用 `docker run -v $PWD/config.json:/app/config.json netease` 将json文件挂载到Docker容器中并启动。 
 
@@ -73,9 +74,9 @@
 
 }
 ```
-### PS：多账号模式  
-多账号模式下，你需要为每个网易云账号登录并填写对应的 login_cookie。
-~~多账号模式下，你需要创建多个 Chrome 配置文件，并在每个配置文件中登录对应账号。然后在 config.json 中填写不同的 profileName。~~
+### PS：多用户模式  
+多用户模式下，你需要为每个网易云账号登录并填写对应的 login_cookie。
+~~多用户模式下，你需要创建多个 Chrome 配置文件，并在每个配置文件中登录对应账号。然后在 config.json 中填写不同的 profileName。~~
 
 ### Cookie 有效期
 每次登录获取的 Cookie 有效期大约为 1 个月，并非永久有效。因此，大约每个月需要重新登录获取新的 Cookie。
