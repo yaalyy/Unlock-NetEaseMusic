@@ -163,7 +163,7 @@ def login_task(config_string):
                 exit(0)
     
 if __name__ == '__main__':  
-    os.environ["SE_DRIVER_MIRROR_URL"] = "https://msedgedriver.microsoft.com"  # Set the temp mirror URL for Edge driver
+    #os.environ["SE_DRIVER_MIRROR_URL"] = "https://msedgedriver.microsoft.com"  # Set the temp mirror URL for Edge driver
     
     # Setting up logging
     logging.basicConfig(level=logging.INFO,format='[%(levelname)s] %(asctime)s %(message)s')
